@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+<!-- main content -->
+{% block content %}
+<!-- Image and text -->
+
+<div class="container">
+    <h1 class="my-5 text-center"> Todays work</h1>
+    <ul class="list-group">
+        <!--  -->
+        {% if tasks %}
+
+        <!--  -->
+        {% for taskDb in tasks %}
+        <li class="list-group-item" id="container{{taskDb.id}}">
+            <div>
+
+                <span style="position: absolute;top: 10px;margin-top: 10px;">
+                    <input id="editInput{{taskDb.id}}" type="text" value='{{taskDb.task}}' style="display: none;"> 
+                    <!--  -->
+                    {% if taskDb.completed %}
+                    <div id="taskDisplay{{taskDb.id}}" style="text-decoration: line-through;" >
+                        
+                        {{taskDb.task}}
+                    </div>
+                    {% else %}
+                    <!--  -->
+                    <div id="taskDisplay{{taskDb.id}}" >
+                        
+                        {{taskDb.task}}
+                    </div>
+                    {% endif %}
+                </span>
+
+                <span style="position: absolute;top: 10px;margin-top: 10px;">
+                    <input id="editInput{{taskDb.id}}" type="text" value='{{taskDb.task}}' style="display: none;"> 
+                    
+               
+                </span> {% if taskDb.completed %}
+                <button id="undoBtn{{taskDb.id}}" type="button" onclick="undo('{{taskDb.id}}')" id="edit" style="float: right;" class="btn btn-success">undo</button>
+                <button type="button" id="completedBtn{{taskDb.id}}" style="float: right;display: none;" onclick="completed('{{taskDb.id}}')" class="btn btn-success">Completed</button>
+                <button type="button" id="deleteBtn{{taskDb.id}}" style="float: right;display: none;" onclick="deleteTask('{{taskDb.id}}')" class="mx-3 btn btn-danger">Remove</button>
+                <button type="button" onclick="edit('{{taskDb.id}}')" id="edit{{taskDb.id}}" style="float: right;display: none;" class="btn btn-warning">edit</button>
+                <button id="doneBtn{{taskDb.id}}" type="button" onclick="doneEdit('{{taskDb.id}}')" id="edit" style="float: right; display: none;" class="btn btn-success">done!</button>
+                <!--  -->
+                {% else %}
+                <button type="button" id="completedBtn{{taskDb.id}}" style="float: right;" onclick="completed('{{taskDb.id}}')" class="btn btn-success">Completed</button>
+                <button type="button" id="deleteBtn{{taskDb.id}}" style="float: right;" onclick="deleteTask('{{taskDb.id}}')" class="mx-3 btn btn-danger">Remove</button>
+                <button type="button" onclick="edit('{{taskDb.id}}')" id="edit{{taskDb.id}}" style="float: right;" class="btn btn-warning">edit</button>
+                <button id="doneBtn{{taskDb.id}}" type="button" onclick="doneEdit('{{taskDb.id}}')" id="edit" style="float: right; display: none;" class="btn btn-success">done!</button>
+                <button id="undoBtn{{taskDb.id}}" type="button" onclick="undo('{{taskDb.id}}')" id="edit" style="float: right;display: none;" class="btn btn-success">undo</button>
+                <!--  -->
+                {% endif %}
+
+
+
+
+            </div>
+
+
+
+
+
+
+        </li>
+        {% endfor %}
+        <!--  -->
+        {% else %}
+        <h1>No task available</h1>
+        {% endif %}
+
+
+    </ul>
+    <!-- Main content goes here -->
+    <div style="width: 50%;margin-top: 50px;margin-left: 25%;padding: 20px;">
+
+        <a href="{% url 'add_task' %}" type="button" class="btn btn-primary btn-lg btn-block">Add New Task</a>
+        <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-secondary btn-lg btn-block">Delete all</button>
+        <!-- Button trigger modal -->
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                    </div>
+                    <div class="modal-body">
+                        Do you want to delete all tasks? It cannot be restored.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <a href="{% url 'delete' %}" type="button" class="btn btn-primary">Conferm</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+<!--  -->
+{% block script %}
+
+<script async src="../static/main.js"></script>
+
+{% endblock script %}
