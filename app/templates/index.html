@@ -4,9 +4,11 @@
 <!-- Image and text -->
 
 <div class="container">
+    <div id="loading"></div>
     <h1 class="my-5 text-center"> Todays work</h1>
     <ul class="list-group">
         <!--  -->
+
         {% if tasks %}
 
         <!--  -->
@@ -14,7 +16,7 @@
         <li class="list-group-item" id="container{{taskDb.id}}">
             <div>
 
-                <span style="position: absolute;top: 10px;margin-top: 10px;">
+                <span>
                     <input id="editInput{{taskDb.id}}" type="text" value='{{taskDb.task}}' style="display: none;"> 
                     <!--  -->
                     {% if taskDb.completed %}
@@ -31,23 +33,27 @@
                     {% endif %}
                 </span>
 
-                <span style="position: absolute;top: 10px;margin-top: 10px;">
+                <span>
                     <input id="editInput{{taskDb.id}}" type="text" value='{{taskDb.task}}' style="display: none;"> 
                     
                
                 </span> {% if taskDb.completed %}
-                <button id="undoBtn{{taskDb.id}}" type="button" onclick="undo('{{taskDb.id}}')" id="edit" style="float: right;" class="btn btn-success">undo</button>
-                <button type="button" id="completedBtn{{taskDb.id}}" style="float: right;display: none;" onclick="completed('{{taskDb.id}}')" class="btn btn-success">Completed</button>
-                <button type="button" id="deleteBtn{{taskDb.id}}" style="float: right;display: none;" onclick="deleteTask('{{taskDb.id}}')" class="mx-3 btn btn-danger">Remove</button>
-                <button type="button" onclick="edit('{{taskDb.id}}')" id="edit{{taskDb.id}}" style="float: right;display: none;" class="btn btn-warning">edit</button>
-                <button id="doneBtn{{taskDb.id}}" type="button" onclick="doneEdit('{{taskDb.id}}')" id="edit" style="float: right; display: none;" class="btn btn-success">done!</button>
+                <a id="undoBtn{{taskDb.id}}" type="button" onclick="undo('{{taskDb.id}}')" id="edit" class="btn btn-success btn-sm">undo</a>
+                <a type="button" id="completedBtn{{taskDb.id}}" onclick="completed('{{taskDb.id}}')" class="btn btn-success btn-sm">Completed</a>
+                <button type="button" id="deleteBtn{{taskDb.id}}" style="display: none;" onclick="deleteTask('{{taskDb.id}}')" class="btn btn-danger btn-sm">Remove
+                   
+                </button>
+                <button type="button" onclick="edit('{{taskDb.id}}')" id="edit{{taskDb.id}}" style="display: none;" class="btn btn-warning btn-sm">edit</button>
+                <button id="doneBtn{{taskDb.id}}" type="button" onclick="doneEdit('{{taskDb.id}}')" id="edit" style=" display: none;" class="btn btn-success btn-sm">done!</button>
                 <!--  -->
                 {% else %}
-                <button type="button" id="completedBtn{{taskDb.id}}" style="float: right;" onclick="completed('{{taskDb.id}}')" class="btn btn-success">Completed</button>
-                <button type="button" id="deleteBtn{{taskDb.id}}" style="float: right;" onclick="deleteTask('{{taskDb.id}}')" class="mx-3 btn btn-danger">Remove</button>
-                <button type="button" onclick="edit('{{taskDb.id}}')" id="edit{{taskDb.id}}" style="float: right;" class="btn btn-warning">edit</button>
-                <button id="doneBtn{{taskDb.id}}" type="button" onclick="doneEdit('{{taskDb.id}}')" id="edit" style="float: right; display: none;" class="btn btn-success">done!</button>
-                <button id="undoBtn{{taskDb.id}}" type="button" onclick="undo('{{taskDb.id}}')" id="edit" style="float: right;display: none;" class="btn btn-success">undo</button>
+                <button type="button" id="completedBtn{{taskDb.id}}" onclick="completed('{{taskDb.id}}')" class="btn btn-success btn-sm">Completed</button>
+                <button type="button" id="deleteBtn{{taskDb.id}}" onclick="deleteTask('{{taskDb.id}}')" class="btn btn-danger btn-sm">
+                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    Remove</button>
+                <button type="button" onclick="edit('{{taskDb.id}}')" id="edit{{taskDb.id}}" class="btn btn-warning btn-sm">edit</button>
+                <button id="doneBtn{{taskDb.id}}" type="button" onclick="doneEdit('{{taskDb.id}}')" id="edit" style=" display: none;" class="btn btn-success btn-sm">done!</button>
+                <button id="undoBtn{{taskDb.id}}" type="button" onclick="undo('{{taskDb.id}}')" id="undo" style="display: none;" class="btn btn-success btn-sm">undo</button>
                 <!--  -->
                 {% endif %}
 
@@ -73,8 +79,11 @@
     <!-- Main content goes here -->
     <div style="width: 50%;margin-top: 50px;margin-left: 25%;padding: 20px;">
 
-        <a href="{% url 'add_task' %}" type="button" class="btn btn-primary btn-lg btn-block">Add New Task</a>
-        <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-secondary btn-lg btn-block">Delete all</button>
+        <a href="{% url 'add_task' %}" type="button" class="btn btn-primary btn-sm btn-block">Add New Task</a>
+        <a type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-secondary btn-sm btn-block ">
+            
+            Delete all</a>
+
         <!-- Button trigger modal -->
 
 
@@ -83,7 +92,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Conferm Delete</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

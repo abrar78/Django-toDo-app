@@ -1,5 +1,6 @@
 console.log("This is main.js attached succesfully!")
-
+const loading = document.getElementById('loading')
+loading.style.display = "none"
 
 function edit(d) {
     console.log(d)
@@ -11,6 +12,7 @@ function edit(d) {
 }
 
 function doneEdit(d) {
+    loading.style.display = ""
     let newTask = document.getElementById(`editInput${d}`)
     let taskDisplay = document.getElementById(`taskDisplay${d}`)
     let url = `http://127.0.0.1:8000/viewset/task/${d}/`
@@ -34,6 +36,9 @@ function doneEdit(d) {
                 document.getElementById(`edit${d}`).style.display = ''
                 document.getElementById(`editInput${d}`).style.display = 'none'
                 document.getElementById(`doneBtn${d}`).style.display = "none"
+                loading.style.display = "none"
+            } else {
+                loading.style.display = "none"
             }
         })
         .then(function(data) {
@@ -46,6 +51,7 @@ function doneEdit(d) {
 
 function deleteTask(d) {
     let url = `http://127.0.0.1:8000/viewset/task/${d}/`
+    loading.style.display = ""
     fetch(url, {
             method: 'DELETE',
             headers: {
@@ -57,8 +63,11 @@ function deleteTask(d) {
 
             console.log(res.status)
             if (res.status == 204) {
+                loading.style.display = "none"
                 console.log('succesfully deleted a task')
                 document.getElementById(`container${d}`).style.display = "none"
+            } else {
+                loading.style.display = "none"
             }
         })
         .then(function(data) {
@@ -76,6 +85,7 @@ function completed(d) {
     let taskDisplay = document.getElementById(`taskDisplay${d}`)
     taskDisplay.style.textDecoration = 'line-through'
     let url = `http://127.0.0.1:8000/viewset/task/${d}/`
+    loading.style.display = ""
     fetch(url, {
             method: 'PUT',
             headers: {
@@ -98,6 +108,7 @@ function completed(d) {
                 document.getElementById(`completedBtn${d}`).style.display = "none"
                 document.getElementById(`deleteBtn${d}`).style.display = "none"
                 document.getElementById(`undoBtn${d}`).style.display = ""
+                loading.style.display = "none"
             }
         })
         .then(function(data) {
@@ -113,6 +124,7 @@ function undo(d) {
     let taskDisplay = document.getElementById(`taskDisplay${d}`)
     taskDisplay.style.textDecoration = 'none'
     let url = `http://127.0.0.1:8000/viewset/task/${d}/`
+    loading.style.display = ""
     fetch(url, {
             method: 'PUT',
             headers: {
@@ -135,6 +147,9 @@ function undo(d) {
                 document.getElementById(`completedBtn${d}`).style.display = ""
                 document.getElementById(`deleteBtn${d}`).style.display = ""
                 document.getElementById(`undoBtn${d}`).style.display = "none"
+                loading.style.display = "none"
+            } else {
+                loading.style.display = "none"
             }
         })
         .then(function(data) {
